@@ -1,7 +1,8 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import AuthContext from '../../context/AuthContex';
 import * as api from '../../axiosApi/methods';
 export default function LoginModal(props) {
+  const [message, setMessage] = useState(false);
   const emailInput = useRef();
   const passworInput = useRef();
   const AuthCtx = useContext(AuthContext);
@@ -13,8 +14,10 @@ export default function LoginModal(props) {
         password: passworInput.current.value,
       };
 
-      const response = api.login(data).then((res) => res);
-      console.log(response);
+      api
+        .login(data)
+        .then((res) => AuthCtx.login(res))
+        .catch((err) => setMessage(err));
     }
   };
   return (
@@ -26,9 +29,10 @@ export default function LoginModal(props) {
               <h5 className='modal-title' id='exampleModalLabel'>
                 New message
               </h5>
-              <button type='button' className='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+              <button onClick={props.modalHide} type='button' className='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
             </div>
             <div className='modal-body'>
+              {message && <p className='error'>{message}</p>}
               <form onSubmit={loginFormSubmit}>
                 <div className='mb-3'>
                   <label for='exampleInputEmail1' className='form-label'>

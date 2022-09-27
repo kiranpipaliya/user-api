@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { TbApi } from 'react-icons/tb';
 import LoginModal from '../modal/LoginModal';
 import RegisterModal from '../modal/RegisterModal';
+import AuthContext from '../../context/AuthContex';
 export default function Header() {
+  const authCtx = useContext(AuthContext);
   const [modalShow, setModalShow] = useState(false);
   const [loginModalShow, setLoginModalShow] = useState(false);
 
@@ -10,8 +12,19 @@ export default function Header() {
     setModalShow(!modalShow);
   };
   const LoginModalShowHandler = () => {
-    setLoginModalShow(!modalShow);
+    setLoginModalShow(!loginModalShow);
   };
+
+  const autBtns = (
+    <div className='text-end'>
+      <button onClick={LoginModalShowHandler} type='button' className='btn btn-outline-light me-2'>
+        Login
+      </button>
+      <button onClick={modalShowHandler} type='button' className='btn btn-warning'>
+        Sign-up
+      </button>
+    </div>
+  );
 
   return (
     <>
@@ -53,15 +66,8 @@ export default function Header() {
             <form className='col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3' role='search'>
               <input type='search' className='form-control form-control-dark text-bg-dark' placeholder='Search...' aria-label='Search' />
             </form>
-
-            <div className='text-end'>
-              <button onClick={LoginModalShowHandler} type='button' className='btn btn-outline-light me-2'>
-                Login
-              </button>
-              <button onClick={modalShowHandler} type='button' className='btn btn-warning'>
-                Sign-up
-              </button>
-            </div>
+            {authCtx.token == '' && autBtns}
+            {authCtx.token !== '' && <p style={{ color: 'white' }}>Avatar</p>}
           </div>
         </div>
       </header>

@@ -8,6 +8,7 @@ const initialState = {
 
 const AuthReducer = (state, action) => {
   if (action.type === 'LOGIN') {
+    console.log(action.data);
     return {
       token: action.data,
       message: action.message,

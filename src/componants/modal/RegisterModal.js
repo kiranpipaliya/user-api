@@ -22,7 +22,7 @@ export default function RegisterModal(props) {
               <h5 className='modal-title' id='exampleModalLabel'>
                 New message
               </h5>
-              <button type='button' className='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+              <button onClick={props.modalHide} type='button' className='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
             </div>
             <div className='modal-body'>
               <form onSubmit={registeFormSubmit}>

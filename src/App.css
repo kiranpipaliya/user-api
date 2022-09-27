@@ -56,3 +56,7 @@
 .message {
   font-size: 32px;
 }
+
+.error {
+  color: red;
+}
